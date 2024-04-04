@@ -34,3 +34,4 @@ jobs:
           path: '.'
           destination: 'cs1660-spring-24'
           parent: false
+          process_gcloudignore: false
