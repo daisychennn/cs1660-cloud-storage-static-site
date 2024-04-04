@@ -1,0 +1,36 @@
+name: Static Site
+
+on:
+  push:
+    branches:
+      - main  # Set a branch to deploy
+      - gha-service-account
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # configure gcloud `setup-gcloud` automatically
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/642437369776/locations/global/workloadIdentityPools/github/providers/my-repo'
+          service_account: 'cs1660@neural-orbit-412301.iam.gserviceaccount.com'
+
+      # upload files to GCS
+      - id: 'upload-static-files'
+        uses: 'google-github-actions/upload-cloud-storage@v1'
+        with:
+          path: 'public'
+          destination: 'cs1660-spring-24'
+          parent: false
