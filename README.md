@@ -2,7 +2,7 @@
 ## Assignment 5
 
 **For submission:** <br>
-IP: 35.227.232.121:443 
+IP: 35.227.232.121 
 
 **Project Description**
 The objective of this project is to deploy a static website on the Google Cloud Platform (GCP) using various GCP services, including:
